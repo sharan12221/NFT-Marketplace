@@ -1,0 +1,16 @@
+{
+  "name": "nft-marketplace",
+  "version": "1.0.0",
+  "description": "### contract deployed on Ethereum Sepolia Testnetwork :  ```  address => \"0x16d20950C681F5b59Ae2B3884e293EeEcb8167B7\" ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "express": "^4.19.2"
+  }
+}
