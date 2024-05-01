@@ -1,43 +1,46 @@
-const express = require('express');
+const express = require ('express');
+require('dotenv').config();
+const creteateNFT = require('./controller/createnft.js')
+const getTokenUri = require('./controller/createnft.js')
+const controller = require('./controller/createnft.js')
+const getAllNFT = require('./controller/createnft.js')
+const getMyNFT = require('./controller/createnft.js')
+const listNFT = require('./controller/createnft.js')
+const getListedNFT = require('./controller/createnft.js')
 const app = express();
-const getAllNFT = require('./utils/createNFT.js');
-const getMyNFT = require('./utils/createNFT.js');
-const createNFT = require('./utils/createNFT.js');
-const ownerOfToken = require('./utils/createNFT.js');
-const tokenUri = require('./utils/createNFT.js');
-const Symbol = require('./utils/createNFT.js');
-const Name = require('./utils/createNFT.js');
-const BalanceOf = require('./utils/createNFT.js');
-const getListingPrice = require('./utils/createNFT.js');
-const getTokenCount = require('./utils/createNFT.js');
+const ejs = require('ejs');
 
 
-app.get('/', (req, resp)=> {
-    resp.send("hello Welcome")
+// app.set('view engine', "ejs");
+
+// app.get('/profile', (req, resp) => {
+//     const user = { name: "Sharan" };
+//     resp.render('profile', { user }); // Render 'profile.ejs' with the user data
+// });
+
+app.get('/', (req, resp)=>{
+    resp.send("Hello, Welcome");
+}) 
+
+app.post('/mint', async(req, resp)=> {
+    const create = await creteateNFT("sandip", "./nft_Image.png");
+    resp.status(200).send(create);
 })
 
-app.post('/upload',async (req, res) => {
-    try {
+app.post('/listNFT', async (req, resp) => {
+    const list = await listNFT(3, 0.01);
+    console.log("🚀 ~ app.post ~ list:", list)
+    resp.status(200).send(list);
+})
 
-        // Call the uploadToIPFS function
-        const hash = await uploadToIPFS("sharan", "./utils/nft_Image.png");
-
-        // Respond to the client
-        res.status(200).send({"hash" : hash});
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error uploading file to IPFS.');
-    }
-});
-
-app.post('/mint',async (req, res)=> {
-    const mint = await createNFT("sharan", "./utils/nft_Image.png");
-    res.status(200).send(mint);
-});
+app.get('/getUrl', async(req, resp)=> {
+    const get = await getTokenUri(2);
+    resp.status(200).send(get);
+})
 
 app.get('/getAllNFTs', async (req, res) =>{ 
     const getAll = await getAllNFT();
-    res.status(200).send(getAll)
+    res.status(200).send(getAll);
 })
 
 app.get('/getMyNFTs', async (req, res)=>{
@@ -45,30 +48,14 @@ app.get('/getMyNFTs', async (req, res)=>{
     res.status(200).send(MyNFT);
 })
 
-app.get('/owner', async (req, res)=> {
-    const owner = await ownerOfToken(1);
-    res.status(200).send(owner);
+
+app.get('/getListedNFTs',async (req, resp)=>{
+    const listed = await getListedNFT();
+    resp.status(200).send(listed);
 })
 
-app.get('/tokenURI',async (req, res)=> {
-    const uri = tokenUri(1);
-    res.status(200).send(uri);
-})
 
-app.get('/symbol',async (req, res)=> {
-    const sym =await Symbol();
-    res.status(200).send(sym);
-})
 
-// app.get('/Name',async (req, res)=> {
-//     const n =await Name();
-//     res.status(200).send(n);
-// })
-
-app.get('/BalanceOf',async (req, res)=> {
-    const bal =await BalanceOf("0xbAadDAA406917A586E563F35684FCe8601e4aC3b");
-    res.status(200).send(bal);      // bit number (do ====>    .toString())
-})
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
