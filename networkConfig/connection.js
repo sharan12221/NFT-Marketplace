@@ -8,7 +8,7 @@ const __dirname = path.resolve();
 
 
 // const pvtKey = process.env.privateKey;
-const pvtKey = "035e3c4864209b7f751ad27138a14359d8c4615f3d63ca8a96d015ba740a14f8"
+const pvtKey = /* Private key */
 // const contractAddress = process.env.contractAddress
 const contractAddress = "0x16d20950C681F5b59Ae2B3884e293EeEcb8167B7"
 // const httpUrl = process.env.infuraPolygonApi // (for amoy polygon)
